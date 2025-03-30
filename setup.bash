@@ -21,8 +21,12 @@ chmod +x ./.venv/bin/activate
 curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py
 
-python3 -m pip install google-cloud-bigtable pandas flask
+python3 -m pip install google-cloud-bigtable pandas flask tqdm
 
 python3 load.py
+
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo apt-get install iptables-persistent
+sudo netfilter-persistent save
 
 python3 app.py
