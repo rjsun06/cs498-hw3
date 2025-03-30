@@ -1,5 +1,6 @@
 from google.cloud import bigtable
 import pandas as pd
+from tqdm import tqdm
 from info import *
 
 client = bigtable.Client(project=project_id, admin=True)
@@ -7,7 +8,7 @@ instance = client.instance(instance_id)
 table = instance.table(table_id)
 df = pd.read_csv(csv_path)
 
-for _, row in df.iterrows():
+for _, row in tqdm(df.iterrows(),total=df.shape[0]):
     row_key = str(row['DOL Vehicle ID']).encode()
     row_data = table.row(row_key)
     row_data.set_cell('ev_info', 'make', str(row.get('Make', '')))

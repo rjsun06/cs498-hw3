@@ -13,12 +13,13 @@ gcloud bigtable instances tables create ev-population \
     --instance=ev-bigtable \
     --column-families=ev_info
 
+sudo apt-get install python3-venv
 python3 -m venv .venv
 chmod +x ./.venv/bin/activate
 ./.venv/bin/activate
 
 curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python get-pip.py
+python3 get-pip.py
 
 python3 -m pip install google-cloud-bigtable pandas flask
 
