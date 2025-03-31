@@ -6,8 +6,7 @@ gcloud services enable bigtable.googleapis.com
 gcloud bigtable instances create ev-bigtable \
     --cluster=ev-cluster \
     --cluster-zone=us-central1-a \
-    --display-name="EV Bigtable" \
-    --instance-type=PRODUCTION
+    --display-name="EV Bigtable"
 
 gcloud bigtable instances tables create ev-population \
     --instance=ev-bigtable \
@@ -16,7 +15,7 @@ gcloud bigtable instances tables create ev-population \
 sudo apt-get install python3-venv
 python3 -m venv .venv
 chmod +x ./.venv/bin/activate
-./.venv/bin/activate
+source ./.venv/bin/activate
 
 curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py

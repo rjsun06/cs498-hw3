@@ -20,9 +20,9 @@ def best_bmw():
     for row in table.read_rows():
         try:
             count += \
-            (row.cells['ev_info'].get(b'make', [None])[0].value.decode().lower() == 'bmw') \
+            int((row.cells['ev_info'].get(b'make', [None])[0].value.decode().lower() == 'bmw') \
             and \
-            (int(row.cells['ev_info'].get(b'electric range', [None])[0].value.decode()) > 100)
+            (int(row.cells['ev_info'].get(b'electric range', [None])[0].value.decode()) > 100))
         except:
             continue
     return str(count)
@@ -51,17 +51,21 @@ def update():
 def delete():
     to_delete = []
     for row in table.read_rows():
-        try:
-            model_year = row.cells['ev_info'].get(b'model year', [None])[0].value.decode()
-            if model_year < 2014:
-                to_delete.append(row.row_key)
-        except:
-            continue
+        model_year = row.cells['ev_info'].get(b'model year', [None])[0]
+        if model_year:
+            try:
+                if int(model_year.value.decode()) < 2014:
+                    to_delete.append(row.row_key)
+            except ValueError:
+                continue
     for key in to_delete:
         row = table.row(key)
         row.delete()
         row.commit()
-    return rows()
+    count = 0
+    for _ in table.read_rows():
+        count += 1
+    return str(count)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

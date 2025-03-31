@@ -16,5 +16,5 @@ for _, row in tqdm(df.iterrows(),total=df.shape[0]):
     row_data.set_cell('ev_info', 'model year', str(row.get('Model Year', '')))
     row_data.set_cell('ev_info', 'electric range', str(row.get('Electric Range', '')))
     row_data.set_cell('ev_info', 'city', str(row.get('City', '')))
-    row_data.set_cell('ev_info', 'county', str(row.get('County', '')))
+    row_data.set_cell('ev_info', 'county', str(row.get('County', '')).encode('utf-8'))
     row_data.commit()
